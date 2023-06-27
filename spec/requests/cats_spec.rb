@@ -84,4 +84,211 @@ RSpec.describe "Cats", type: :request do
     expect(response).to have_http_status(200)
       end
       end
+
+
+
+
+
+
+
+
+
+
+
+    
+      describe "can not create cat without valid attributes" do
+        it "does not creat cat without name" do
+          cat_params = {
+            cat: {
+              age: 5,
+              enjoys: 'Furrrrociously hunting bugs.',
+              image: 'https://c0.wallpaperflare.com/preview/135/654/456/italy-epic-cat-cats.jpg'
+              }
+            }
+      post "/cats", params: cat_params
+
+      expect(response.status).to eq 422
+      cat = JSON. parse(response.body)
+      expect(cat['name']).to include "can't be blank"
+          end
+
+
+          it "does not create cat without age" do
+            cat_params = {
+              cat: {
+                name: 'Mr.Johnson',
+                enjoys: 'Furrrrociously hunting bugs.',
+                image: 'https://c0.wallpaperflare.com/preview/135/654/456/italy-epic-cat-cats.jpg'
+                }
+              }
+        post "/cats", params: cat_params
+  
+        expect(response.status).to eq 422
+        cat = JSON. parse(response.body)
+        expect(cat['age']).to include "can't be blank"
+          end
+
+          it "does not create cat without enjoys" do
+            cat_params = {
+              cat: {
+                age: 5,
+                name: 'Mr.Johnson',
+                image: 'https://c0.wallpaperflare.com/preview/135/654/456/italy-epic-cat-cats.jpg'
+                }
+              }
+        post "/cats", params: cat_params
+  
+        expect(response.status).to eq 422
+        cat = JSON. parse(response.body)
+        expect(cat['enjoys']).to include "can't be blank"
+          end
+
+          it "does not create cat without image" do
+            cat_params = {
+              cat: {
+                age: 5,
+                name: 'Mr.Johnson',
+                enjoys: 'Furrrrociously hunting bugs.',
+               }
+              }
+        post "/cats", params: cat_params
+  
+        expect(response.status).to eq 422
+        cat = JSON. parse(response.body)
+        expect(cat['image']).to include "can't be blank"
+          end
+
+        end
+        
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        describe "can not update cat without valid attributes" do
+          it "does not update cat without name" do
+            cat_params = {
+              cat: {
+                age: 5,
+                name: 'Mr.Johnson',
+                enjoys: 'Furrrrociously hunting bugs.',
+                image: 'https://c0.wallpaperflare.com/preview/135/654/456/italy-epic-cat-cats.jpg'
+                }
+              }
+       
+              
+        post "/cats", params: cat_params
+        cat = Cat.first
+        
+        updated_cat_params = {
+          cat: {
+          age: 5,
+          name:'',
+          enjoys: 'Furrrrociously hunting bugs.',
+          image: 'https://c0.wallpaperflare.com/preview/135/654/456/italy-epic-cat-cats.jpg'
+          }
+          }
+        
+          patch "/cats/#{cat.id}", params: updated_cat_params 
+          cat = JSON.parse(response.body)
+          expect(response).to have_http_status 422 
+          expect(cat['name']).to include "can't be blank"
+            end
+
+            it "does not update cat without age" do
+              cat_params = {
+                cat: {
+                  age: 5,
+                  name: 'Mr.Johnson',
+                  enjoys: 'Furrrrociously hunting bugs.',
+                  image: 'https://c0.wallpaperflare.com/preview/135/654/456/italy-epic-cat-cats.jpg'
+                  }
+                }
+         
+                
+          post "/cats", params: cat_params
+          cat = Cat.first
+          
+          updated_cat_params = {
+            cat: {
+            age: '',
+            name:'Mr.Johnson',
+            enjoys: 'Furrrrociously hunting bugs.',
+            image: 'https://c0.wallpaperflare.com/preview/135/654/456/italy-epic-cat-cats.jpg'
+            }
+            }
+          
+            patch "/cats/#{cat.id}", params: updated_cat_params 
+            cat = JSON.parse(response.body)
+            expect(response).to have_http_status 422 
+            expect(cat['age']).to include "can't be blank"
+              end
+
+              it "does not update cat without enjoys" do
+                cat_params = {
+                  cat: {
+                    age: 5,
+                    name: 'Mr.Johnson',
+                    enjoys: 'Furrrrociously hunting bugs.',
+                    image: 'https://c0.wallpaperflare.com/preview/135/654/456/italy-epic-cat-cats.jpg'
+                    }
+                  }
+           
+                  
+            post "/cats", params: cat_params
+            cat = Cat.first
+            
+            updated_cat_params = {
+              cat: {
+              age: '5',
+              name:'Mr.Johnson',
+              enjoys: '',
+              image: 'https://c0.wallpaperflare.com/preview/135/654/456/italy-epic-cat-cats.jpg'
+              }
+              }
+            
+              patch "/cats/#{cat.id}", params: updated_cat_params 
+              cat = JSON.parse(response.body)
+              expect(response).to have_http_status 422 
+              expect(cat['enjoys']).to include "can't be blank"
+                end
+
+                it "does not update cat without image" do
+                  cat_params = {
+                    cat: {
+                      age: 5,
+                      name: 'Mr.Johnson',
+                      enjoys: 'Furrrrociously hunting bugs.',
+                      image: 'https://c0.wallpaperflare.com/preview/135/654/456/italy-epic-cat-cats.jpg'
+                      }
+                    }
+             
+                    
+              post "/cats", params: cat_params
+              cat = Cat.first
+              
+              updated_cat_params = {
+                cat: {
+                age: '5',
+                name:'Mr.Johnson',
+                enjoys: 'Furrrrociously hunting bugs.',
+                image: ''
+                }
+                }
+              
+                patch "/cats/#{cat.id}", params: updated_cat_params 
+                cat = JSON.parse(response.body)
+                expect(response).to have_http_status 422 
+                expect(cat['image']).to include "can't be blank"
+                  end   
+          end
+        
 end

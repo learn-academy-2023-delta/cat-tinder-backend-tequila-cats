@@ -62,5 +62,8 @@ RSpec.describe Cat, type: :model do
     
     expect(cat.errors[:enjoys]).to_not be_empty
    end
+ 
+   
+
 
 end
