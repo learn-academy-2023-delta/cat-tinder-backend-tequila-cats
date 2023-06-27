@@ -81,7 +81,7 @@ RSpec.describe "Cats", type: :request do
     cat = Cat.first
     delete "/cats/#{cat.id}"
     
-    expect(response).to have_http_status(:no_content)
+    expect(response).to have_http_status(200)
       end
       end
 end
