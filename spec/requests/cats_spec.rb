@@ -67,4 +67,21 @@ RSpec.describe "Cats", type: :request do
         expect(updated_cat.age).to eq 7
    end
     end
+
+    describe "DELETE / destroy" do
+      it "deletes a cat" do
+        Cat.create(
+        {
+      name: 'Mr.Johnson',
+      age: 5,
+      enjoys: 'Furrrrociously hunting bugs.',
+      image: 'https://c0.wallpaperflare.com/preview/135/654/456/italy-epic-cat-cats.jpg'
+    }
+        )
+    cat = Cat.first
+    delete "/cats/#{cat.id}"
+    
+    expect(response).to have_http_status(:no_content)
+      end
+      end
 end
